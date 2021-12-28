@@ -11,7 +11,7 @@ import { Product } from './schemas/Product';
 import { User } from './schemas/User';
 import 'dotenv/config';
 import { insertSeedData } from './seed-data';
-import { sendPasswordResetEmail } from './lib/mail';
+// import { sendPasswordResetEmail } from './lib/mail';
 import { extendGraphqlSchema } from './mutations';
 
 const databaseURL = process.env.DATABASE_URL || 'file:./keystone.db';
@@ -30,13 +30,13 @@ const { withAuth } = createAuth({
     // These fields are collected in the "Create First User" form
     fields: ['name', 'email', 'password'],
   },
-  passwordResetLink: {
-    async sendToken(args) {
-      // send the email
-      await sendPasswordResetEmail(args.token, args.identity);
-    },
-  },
-  sessionData: `id name email role { ${permissionsList.join(' ')} }`,
+  // passwordResetLink: {
+  //   async sendToken(args) {
+  //     // send the email
+  //     await sendPasswordResetEmail(args.token, args.identity);
+  //   },
+  // },
+  // sessionData: `id name email role { ${permissionsList.join(' ')} }`,
 });
 
 export default withAuth(
