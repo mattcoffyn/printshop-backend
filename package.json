@@ -1,8 +1,8 @@
 {
-  "name": "@keystone-6/example-ecommerce",
+  "name": "filmlab-keystone",
   "version": "0.0.1",
   "private": true,
-  "author": "Wes Bos & Jed Watson",
+  "author": "Matt Coffyn",
   "license": "MIT",
   "scripts": {
     "dev": "keystone dev",
