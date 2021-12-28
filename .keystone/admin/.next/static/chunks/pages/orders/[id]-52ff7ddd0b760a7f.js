@@ -1,1 +1,0 @@
-(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[750],{2549:function(n,r,u){(window.__NEXT_P=window.__NEXT_P||[]).push(["/orders/[id]",function(){return u(5120)}])},5120:function(n,r,u){"use strict";u.r(r);var _=u(1086);r.default=(0,_.p)({listKey:"Order"})}},function(n){n.O(0,[86,888,774,179],(function(){return r=2549,n(n.s=r);var r}));var r=n.O();_N_E=r}]);
