@@ -1,0 +1,1 @@
+(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[981],{2793:function(n,e,r){(window.__NEXT_P=window.__NEXT_P||[]).push(["/order-items/[id]",function(){return r(4461)}])},4461:function(n,e,r){"use strict";r.r(e);var t=r(1086);e.default=(0,t.p)({listKey:"OrderItem"})}},function(n){n.O(0,[86,888,774,179],(function(){return e=2793,n(n.s=e);var e}));var e=n.O();_N_E=e}]);
