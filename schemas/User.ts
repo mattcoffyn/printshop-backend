@@ -17,8 +17,11 @@ export const User = list({
   },
   ui: {
     // hide the backend UI from regular users
-    hideCreate: args => !permissions.canManageUsers(args),
-    hideDelete: args => !permissions.canManageUsers(args),
+    hideCreate: (args) => !permissions.canManageUsers(args),
+    hideDelete: (args) => !permissions.canManageUsers(args),
+  },
+  db: {
+    idField: { kind: 'autoincrement' },
   },
   fields: {
     name: text({ validation: { isRequired: true } }),
@@ -32,7 +35,6 @@ export const User = list({
         itemView: { fieldMode: 'read' },
       },
     }),
-    orders: relationship({ ref: 'Order.user', many: true }),
     role: relationship({
       ref: 'Role.assignedTo',
       access: {
@@ -40,9 +42,22 @@ export const User = list({
         update: permissions.canManageUsers,
       },
     }),
-    products: relationship({
-      ref: 'Product.user',
+    orders: relationship({
+      ref: 'Order.user',
       many: true,
+      ui: {
+        createView: { fieldMode: 'hidden' },
+        itemView: { fieldMode: 'read' },
+      },
+    }),
+    processProducts: relationship({ ref: 'ProcessProduct.user', many: true }),
+    cartProcessProducts: relationship({
+      ref: 'CartProcessProduct.user',
+      many: true,
+      ui: {
+        createView: { fieldMode: 'hidden' },
+        itemView: { fieldMode: 'read' },
+      },
     }),
   },
 });

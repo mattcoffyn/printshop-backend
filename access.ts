@@ -7,7 +7,7 @@ export function isSignedIn({ session }: ListAccessArgs) {
 }
 
 const generatedPermissions = Object.fromEntries(
-  permissionsList.map(permission => [
+  permissionsList.map((permission) => [
     permission,
     function ({ session }: ListAccessArgs) {
       return !!session?.data.role?.[permission];

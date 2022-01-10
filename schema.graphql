@@ -3,13 +3,19 @@
 
 type Mutation {
   addToCart(productId: ID): CartItem
-  checkout(token: String!): Order
+  sendEmail(processProductId: ID): ProcessProduct
   createUser(data: UserCreateInput!): User
   createUsers(data: [UserCreateInput!]!): [User]
   updateUser(where: UserWhereUniqueInput!, data: UserUpdateInput!): User
   updateUsers(data: [UserUpdateArgs!]!): [User]
   deleteUser(where: UserWhereUniqueInput!): User
   deleteUsers(where: [UserWhereUniqueInput!]!): [User]
+  createRole(data: RoleCreateInput!): Role
+  createRoles(data: [RoleCreateInput!]!): [Role]
+  updateRole(where: RoleWhereUniqueInput!, data: RoleUpdateInput!): Role
+  updateRoles(data: [RoleUpdateArgs!]!): [Role]
+  deleteRole(where: RoleWhereUniqueInput!): Role
+  deleteRoles(where: [RoleWhereUniqueInput!]!): [Role]
   createProduct(data: ProductCreateInput!): Product
   createProducts(data: [ProductCreateInput!]!): [Product]
   updateProduct(
@@ -28,6 +34,65 @@ type Mutation {
   updateProductImages(data: [ProductImageUpdateArgs!]!): [ProductImage]
   deleteProductImage(where: ProductImageWhereUniqueInput!): ProductImage
   deleteProductImages(where: [ProductImageWhereUniqueInput!]!): [ProductImage]
+  createProcessProduct(data: ProcessProductCreateInput!): ProcessProduct
+  createProcessProducts(data: [ProcessProductCreateInput!]!): [ProcessProduct]
+  updateProcessProduct(
+    where: ProcessProductWhereUniqueInput!
+    data: ProcessProductUpdateInput!
+  ): ProcessProduct
+  updateProcessProducts(data: [ProcessProductUpdateArgs!]!): [ProcessProduct]
+  deleteProcessProduct(where: ProcessProductWhereUniqueInput!): ProcessProduct
+  deleteProcessProducts(
+    where: [ProcessProductWhereUniqueInput!]!
+  ): [ProcessProduct]
+  createCartProcessProduct(
+    data: CartProcessProductCreateInput!
+  ): CartProcessProduct
+  createCartProcessProducts(
+    data: [CartProcessProductCreateInput!]!
+  ): [CartProcessProduct]
+  updateCartProcessProduct(
+    where: CartProcessProductWhereUniqueInput!
+    data: CartProcessProductUpdateInput!
+  ): CartProcessProduct
+  updateCartProcessProducts(
+    data: [CartProcessProductUpdateArgs!]!
+  ): [CartProcessProduct]
+  deleteCartProcessProduct(
+    where: CartProcessProductWhereUniqueInput!
+  ): CartProcessProduct
+  deleteCartProcessProducts(
+    where: [CartProcessProductWhereUniqueInput!]!
+  ): [CartProcessProduct]
+  createFilmColour(data: FilmColourCreateInput!): FilmColour
+  createFilmColours(data: [FilmColourCreateInput!]!): [FilmColour]
+  updateFilmColour(
+    where: FilmColourWhereUniqueInput!
+    data: FilmColourUpdateInput!
+  ): FilmColour
+  updateFilmColours(data: [FilmColourUpdateArgs!]!): [FilmColour]
+  deleteFilmColour(where: FilmColourWhereUniqueInput!): FilmColour
+  deleteFilmColours(where: [FilmColourWhereUniqueInput!]!): [FilmColour]
+  createFilmType(data: FilmTypeCreateInput!): FilmType
+  createFilmTypes(data: [FilmTypeCreateInput!]!): [FilmType]
+  updateFilmType(
+    where: FilmTypeWhereUniqueInput!
+    data: FilmTypeUpdateInput!
+  ): FilmType
+  updateFilmTypes(data: [FilmTypeUpdateArgs!]!): [FilmType]
+  deleteFilmType(where: FilmTypeWhereUniqueInput!): FilmType
+  deleteFilmTypes(where: [FilmTypeWhereUniqueInput!]!): [FilmType]
+  createScanResolution(data: ScanResolutionCreateInput!): ScanResolution
+  createScanResolutions(data: [ScanResolutionCreateInput!]!): [ScanResolution]
+  updateScanResolution(
+    where: ScanResolutionWhereUniqueInput!
+    data: ScanResolutionUpdateInput!
+  ): ScanResolution
+  updateScanResolutions(data: [ScanResolutionUpdateArgs!]!): [ScanResolution]
+  deleteScanResolution(where: ScanResolutionWhereUniqueInput!): ScanResolution
+  deleteScanResolutions(
+    where: [ScanResolutionWhereUniqueInput!]!
+  ): [ScanResolution]
   createCartItem(data: CartItemCreateInput!): CartItem
   createCartItems(data: [CartItemCreateInput!]!): [CartItem]
   updateCartItem(
@@ -37,27 +102,21 @@ type Mutation {
   updateCartItems(data: [CartItemUpdateArgs!]!): [CartItem]
   deleteCartItem(where: CartItemWhereUniqueInput!): CartItem
   deleteCartItems(where: [CartItemWhereUniqueInput!]!): [CartItem]
-  createOrderItem(data: OrderItemCreateInput!): OrderItem
-  createOrderItems(data: [OrderItemCreateInput!]!): [OrderItem]
-  updateOrderItem(
-    where: OrderItemWhereUniqueInput!
-    data: OrderItemUpdateInput!
-  ): OrderItem
-  updateOrderItems(data: [OrderItemUpdateArgs!]!): [OrderItem]
-  deleteOrderItem(where: OrderItemWhereUniqueInput!): OrderItem
-  deleteOrderItems(where: [OrderItemWhereUniqueInput!]!): [OrderItem]
+  createOrderStatus(data: OrderStatusCreateInput!): OrderStatus
+  createOrderStatuses(data: [OrderStatusCreateInput!]!): [OrderStatus]
+  updateOrderStatus(
+    where: OrderStatusWhereUniqueInput!
+    data: OrderStatusUpdateInput!
+  ): OrderStatus
+  updateOrderStatuses(data: [OrderStatusUpdateArgs!]!): [OrderStatus]
+  deleteOrderStatus(where: OrderStatusWhereUniqueInput!): OrderStatus
+  deleteOrderStatuses(where: [OrderStatusWhereUniqueInput!]!): [OrderStatus]
   createOrder(data: OrderCreateInput!): Order
   createOrders(data: [OrderCreateInput!]!): [Order]
   updateOrder(where: OrderWhereUniqueInput!, data: OrderUpdateInput!): Order
   updateOrders(data: [OrderUpdateArgs!]!): [Order]
   deleteOrder(where: OrderWhereUniqueInput!): Order
   deleteOrders(where: [OrderWhereUniqueInput!]!): [Order]
-  createRole(data: RoleCreateInput!): Role
-  createRoles(data: [RoleCreateInput!]!): [Role]
-  updateRole(where: RoleWhereUniqueInput!, data: RoleUpdateInput!): Role
-  updateRoles(data: [RoleUpdateArgs!]!): [Role]
-  deleteRole(where: RoleWhereUniqueInput!): Role
-  deleteRoles(where: [RoleWhereUniqueInput!]!): [Role]
   endSession: Boolean!
   authenticateUserWithPassword(
     email: String!
@@ -66,6 +125,12 @@ type Mutation {
   createInitialUser(
     data: CreateInitialUserInput!
   ): UserAuthenticationWithPasswordSuccess!
+  sendUserPasswordResetLink(email: String!): Boolean!
+  redeemUserPasswordResetToken(
+    email: String!
+    token: String!
+    password: String!
+  ): RedeemUserPasswordResetTokenResult
 }
 
 type User {
@@ -80,6 +145,7 @@ type User {
     skip: Int! = 0
   ): [CartItem!]
   cartCount(where: CartItemWhereInput! = {}): Int
+  role: Role
   orders(
     where: OrderWhereInput! = {}
     orderBy: [OrderOrderByInput!]! = []
@@ -87,19 +153,31 @@ type User {
     skip: Int! = 0
   ): [Order!]
   ordersCount(where: OrderWhereInput! = {}): Int
-  role: Role
-  products(
-    where: ProductWhereInput! = {}
-    orderBy: [ProductOrderByInput!]! = []
+  processProducts(
+    where: ProcessProductWhereInput! = {}
+    orderBy: [ProcessProductOrderByInput!]! = []
     take: Int
     skip: Int! = 0
-  ): [Product!]
-  productsCount(where: ProductWhereInput! = {}): Int
+  ): [ProcessProduct!]
+  processProductsCount(where: ProcessProductWhereInput! = {}): Int
+  cartProcessProducts(
+    where: CartProcessProductWhereInput! = {}
+    orderBy: [CartProcessProductOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [CartProcessProduct!]
+  cartProcessProductsCount(where: CartProcessProductWhereInput! = {}): Int
+  passwordResetToken: PasswordState
+  passwordResetIssuedAt: DateTime
+  passwordResetRedeemedAt: DateTime
 }
 
 type PasswordState {
   isSet: Boolean!
 }
+
+scalar DateTime
+  @specifiedBy(url: "https://datatracker.ietf.org/doc/html/rfc3339#section-5.6")
 
 input UserWhereUniqueInput {
   id: ID
@@ -115,9 +193,13 @@ input UserWhereInput {
   email: StringFilter
   password: PasswordFilter
   cart: CartItemManyRelationFilter
-  orders: OrderManyRelationFilter
   role: RoleWhereInput
-  products: ProductManyRelationFilter
+  orders: OrderManyRelationFilter
+  processProducts: ProcessProductManyRelationFilter
+  cartProcessProducts: CartProcessProductManyRelationFilter
+  passwordResetToken: PasswordFilter
+  passwordResetIssuedAt: DateTimeNullableFilter
+  passwordResetRedeemedAt: DateTimeNullableFilter
 }
 
 input IDFilter {
@@ -181,16 +263,35 @@ input OrderManyRelationFilter {
   none: OrderWhereInput
 }
 
-input ProductManyRelationFilter {
-  every: ProductWhereInput
-  some: ProductWhereInput
-  none: ProductWhereInput
+input ProcessProductManyRelationFilter {
+  every: ProcessProductWhereInput
+  some: ProcessProductWhereInput
+  none: ProcessProductWhereInput
+}
+
+input CartProcessProductManyRelationFilter {
+  every: CartProcessProductWhereInput
+  some: CartProcessProductWhereInput
+  none: CartProcessProductWhereInput
+}
+
+input DateTimeNullableFilter {
+  equals: DateTime
+  in: [DateTime!]
+  notIn: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  gt: DateTime
+  gte: DateTime
+  not: DateTimeNullableFilter
 }
 
 input UserOrderByInput {
   id: OrderDirection
   name: OrderDirection
   email: OrderDirection
+  passwordResetIssuedAt: OrderDirection
+  passwordResetRedeemedAt: OrderDirection
 }
 
 enum OrderDirection {
@@ -203,9 +304,13 @@ input UserUpdateInput {
   email: String
   password: String
   cart: CartItemRelateToManyForUpdateInput
-  orders: OrderRelateToManyForUpdateInput
   role: RoleRelateToOneForUpdateInput
-  products: ProductRelateToManyForUpdateInput
+  orders: OrderRelateToManyForUpdateInput
+  processProducts: ProcessProductRelateToManyForUpdateInput
+  cartProcessProducts: CartProcessProductRelateToManyForUpdateInput
+  passwordResetToken: String
+  passwordResetIssuedAt: DateTime
+  passwordResetRedeemedAt: DateTime
 }
 
 input CartItemRelateToManyForUpdateInput {
@@ -215,6 +320,12 @@ input CartItemRelateToManyForUpdateInput {
   connect: [CartItemWhereUniqueInput!]
 }
 
+input RoleRelateToOneForUpdateInput {
+  create: RoleCreateInput
+  connect: RoleWhereUniqueInput
+  disconnect: Boolean
+}
+
 input OrderRelateToManyForUpdateInput {
   disconnect: [OrderWhereUniqueInput!]
   set: [OrderWhereUniqueInput!]
@@ -222,17 +333,18 @@ input OrderRelateToManyForUpdateInput {
   connect: [OrderWhereUniqueInput!]
 }
 
-input RoleRelateToOneForUpdateInput {
-  create: RoleCreateInput
-  connect: RoleWhereUniqueInput
-  disconnect: Boolean
+input ProcessProductRelateToManyForUpdateInput {
+  disconnect: [ProcessProductWhereUniqueInput!]
+  set: [ProcessProductWhereUniqueInput!]
+  create: [ProcessProductCreateInput!]
+  connect: [ProcessProductWhereUniqueInput!]
 }
 
-input ProductRelateToManyForUpdateInput {
-  disconnect: [ProductWhereUniqueInput!]
-  set: [ProductWhereUniqueInput!]
-  create: [ProductCreateInput!]
-  connect: [ProductWhereUniqueInput!]
+input CartProcessProductRelateToManyForUpdateInput {
+  disconnect: [CartProcessProductWhereUniqueInput!]
+  set: [CartProcessProductWhereUniqueInput!]
+  create: [CartProcessProductCreateInput!]
+  connect: [CartProcessProductWhereUniqueInput!]
 }
 
 input UserUpdateArgs {
@@ -245,9 +357,13 @@ input UserCreateInput {
   email: String
   password: String
   cart: CartItemRelateToManyForCreateInput
-  orders: OrderRelateToManyForCreateInput
   role: RoleRelateToOneForCreateInput
-  products: ProductRelateToManyForCreateInput
+  orders: OrderRelateToManyForCreateInput
+  processProducts: ProcessProductRelateToManyForCreateInput
+  cartProcessProducts: CartProcessProductRelateToManyForCreateInput
+  passwordResetToken: String
+  passwordResetIssuedAt: DateTime
+  passwordResetRedeemedAt: DateTime
 }
 
 input CartItemRelateToManyForCreateInput {
@@ -255,19 +371,122 @@ input CartItemRelateToManyForCreateInput {
   connect: [CartItemWhereUniqueInput!]
 }
 
-input OrderRelateToManyForCreateInput {
-  create: [OrderCreateInput!]
-  connect: [OrderWhereUniqueInput!]
-}
-
 input RoleRelateToOneForCreateInput {
   create: RoleCreateInput
   connect: RoleWhereUniqueInput
 }
 
-input ProductRelateToManyForCreateInput {
-  create: [ProductCreateInput!]
-  connect: [ProductWhereUniqueInput!]
+input OrderRelateToManyForCreateInput {
+  create: [OrderCreateInput!]
+  connect: [OrderWhereUniqueInput!]
+}
+
+input ProcessProductRelateToManyForCreateInput {
+  create: [ProcessProductCreateInput!]
+  connect: [ProcessProductWhereUniqueInput!]
+}
+
+input CartProcessProductRelateToManyForCreateInput {
+  create: [CartProcessProductCreateInput!]
+  connect: [CartProcessProductWhereUniqueInput!]
+}
+
+type Role {
+  id: ID!
+  name: String
+  canManageProducts: Boolean
+  canSeeOtherUsers: Boolean
+  canManageUsers: Boolean
+  canManageRoles: Boolean
+  canManageCart: Boolean
+  canManageOrders: Boolean
+  assignedTo(
+    where: UserWhereInput! = {}
+    orderBy: [UserOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [User!]
+  assignedToCount(where: UserWhereInput! = {}): Int
+}
+
+input RoleWhereUniqueInput {
+  id: ID
+}
+
+input RoleWhereInput {
+  AND: [RoleWhereInput!]
+  OR: [RoleWhereInput!]
+  NOT: [RoleWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  canManageProducts: BooleanFilter
+  canSeeOtherUsers: BooleanFilter
+  canManageUsers: BooleanFilter
+  canManageRoles: BooleanFilter
+  canManageCart: BooleanFilter
+  canManageOrders: BooleanFilter
+  assignedTo: UserManyRelationFilter
+}
+
+input BooleanFilter {
+  equals: Boolean
+  not: BooleanFilter
+}
+
+input UserManyRelationFilter {
+  every: UserWhereInput
+  some: UserWhereInput
+  none: UserWhereInput
+}
+
+input RoleOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  canManageProducts: OrderDirection
+  canSeeOtherUsers: OrderDirection
+  canManageUsers: OrderDirection
+  canManageRoles: OrderDirection
+  canManageCart: OrderDirection
+  canManageOrders: OrderDirection
+}
+
+input RoleUpdateInput {
+  name: String
+  canManageProducts: Boolean
+  canSeeOtherUsers: Boolean
+  canManageUsers: Boolean
+  canManageRoles: Boolean
+  canManageCart: Boolean
+  canManageOrders: Boolean
+  assignedTo: UserRelateToManyForUpdateInput
+}
+
+input UserRelateToManyForUpdateInput {
+  disconnect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  create: [UserCreateInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input RoleUpdateArgs {
+  where: RoleWhereUniqueInput!
+  data: RoleUpdateInput!
+}
+
+input RoleCreateInput {
+  name: String
+  canManageProducts: Boolean
+  canSeeOtherUsers: Boolean
+  canManageUsers: Boolean
+  canManageRoles: Boolean
+  canManageCart: Boolean
+  canManageOrders: Boolean
+  assignedTo: UserRelateToManyForCreateInput
+}
+
+input UserRelateToManyForCreateInput {
+  create: [UserCreateInput!]
+  connect: [UserWhereUniqueInput!]
 }
 
 type Product {
@@ -277,7 +496,6 @@ type Product {
   photo: ProductImage
   status: String
   price: Int
-  user: User
 }
 
 input ProductWhereUniqueInput {
@@ -294,7 +512,6 @@ input ProductWhereInput {
   photo: ProductImageWhereInput
   status: StringNullableFilter
   price: IntNullableFilter
-  user: UserWhereInput
 }
 
 input StringNullableFilter {
@@ -351,18 +568,11 @@ input ProductUpdateInput {
   photo: ProductImageRelateToOneForUpdateInput
   status: String
   price: Int
-  user: UserRelateToOneForUpdateInput
 }
 
 input ProductImageRelateToOneForUpdateInput {
   create: ProductImageCreateInput
   connect: ProductImageWhereUniqueInput
-  disconnect: Boolean
-}
-
-input UserRelateToOneForUpdateInput {
-  create: UserCreateInput
-  connect: UserWhereUniqueInput
   disconnect: Boolean
 }
 
@@ -377,17 +587,11 @@ input ProductCreateInput {
   photo: ProductImageRelateToOneForCreateInput
   status: String
   price: Int
-  user: UserRelateToOneForCreateInput
 }
 
 input ProductImageRelateToOneForCreateInput {
   create: ProductImageCreateInput
   connect: ProductImageWhereUniqueInput
-}
-
-input UserRelateToOneForCreateInput {
-  create: UserCreateInput
-  connect: UserWhereUniqueInput
 }
 
 type ProductImage {
@@ -497,6 +701,427 @@ input ProductRelateToOneForCreateInput {
   connect: ProductWhereUniqueInput
 }
 
+type ProcessProduct {
+  id: ID!
+  notes: String
+  noDevelop: Boolean
+  noScans: Boolean
+  isSingle: Boolean
+  isSlide: Boolean
+  filmType: FilmType
+  filmColour: FilmColour
+  scanResolution: ScanResolution
+  singleQuantity: Int
+  status: String
+  orderStatus: OrderStatus
+  order: Order
+  user: User
+  price: Int
+  createdOn: DateTime
+  updatedOn: DateTime
+}
+
+input ProcessProductWhereUniqueInput {
+  id: ID
+}
+
+input ProcessProductWhereInput {
+  AND: [ProcessProductWhereInput!]
+  OR: [ProcessProductWhereInput!]
+  NOT: [ProcessProductWhereInput!]
+  id: IDFilter
+  notes: StringFilter
+  noDevelop: BooleanFilter
+  noScans: BooleanFilter
+  isSingle: BooleanFilter
+  isSlide: BooleanFilter
+  filmType: FilmTypeWhereInput
+  filmColour: FilmColourWhereInput
+  scanResolution: ScanResolutionWhereInput
+  singleQuantity: IntNullableFilter
+  status: StringNullableFilter
+  orderStatus: OrderStatusWhereInput
+  order: OrderWhereInput
+  user: UserWhereInput
+  price: IntNullableFilter
+  createdOn: DateTimeNullableFilter
+  updatedOn: DateTimeNullableFilter
+}
+
+input ProcessProductOrderByInput {
+  id: OrderDirection
+  notes: OrderDirection
+  noDevelop: OrderDirection
+  noScans: OrderDirection
+  isSingle: OrderDirection
+  isSlide: OrderDirection
+  singleQuantity: OrderDirection
+  status: OrderDirection
+  price: OrderDirection
+  createdOn: OrderDirection
+  updatedOn: OrderDirection
+}
+
+input ProcessProductUpdateInput {
+  notes: String
+  noDevelop: Boolean
+  noScans: Boolean
+  isSingle: Boolean
+  isSlide: Boolean
+  filmType: FilmTypeRelateToOneForUpdateInput
+  filmColour: FilmColourRelateToOneForUpdateInput
+  scanResolution: ScanResolutionRelateToOneForUpdateInput
+  singleQuantity: Int
+  status: String
+  orderStatus: OrderStatusRelateToOneForUpdateInput
+  order: OrderRelateToOneForUpdateInput
+  user: UserRelateToOneForUpdateInput
+  price: Int
+  createdOn: DateTime
+  updatedOn: DateTime
+}
+
+input FilmTypeRelateToOneForUpdateInput {
+  create: FilmTypeCreateInput
+  connect: FilmTypeWhereUniqueInput
+  disconnect: Boolean
+}
+
+input FilmColourRelateToOneForUpdateInput {
+  create: FilmColourCreateInput
+  connect: FilmColourWhereUniqueInput
+  disconnect: Boolean
+}
+
+input ScanResolutionRelateToOneForUpdateInput {
+  create: ScanResolutionCreateInput
+  connect: ScanResolutionWhereUniqueInput
+  disconnect: Boolean
+}
+
+input OrderStatusRelateToOneForUpdateInput {
+  create: OrderStatusCreateInput
+  connect: OrderStatusWhereUniqueInput
+  disconnect: Boolean
+}
+
+input OrderRelateToOneForUpdateInput {
+  create: OrderCreateInput
+  connect: OrderWhereUniqueInput
+  disconnect: Boolean
+}
+
+input UserRelateToOneForUpdateInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+  disconnect: Boolean
+}
+
+input ProcessProductUpdateArgs {
+  where: ProcessProductWhereUniqueInput!
+  data: ProcessProductUpdateInput!
+}
+
+input ProcessProductCreateInput {
+  notes: String
+  noDevelop: Boolean
+  noScans: Boolean
+  isSingle: Boolean
+  isSlide: Boolean
+  filmType: FilmTypeRelateToOneForCreateInput
+  filmColour: FilmColourRelateToOneForCreateInput
+  scanResolution: ScanResolutionRelateToOneForCreateInput
+  singleQuantity: Int
+  status: String
+  orderStatus: OrderStatusRelateToOneForCreateInput
+  order: OrderRelateToOneForCreateInput
+  user: UserRelateToOneForCreateInput
+  price: Int
+  createdOn: DateTime
+  updatedOn: DateTime
+}
+
+input FilmTypeRelateToOneForCreateInput {
+  create: FilmTypeCreateInput
+  connect: FilmTypeWhereUniqueInput
+}
+
+input FilmColourRelateToOneForCreateInput {
+  create: FilmColourCreateInput
+  connect: FilmColourWhereUniqueInput
+}
+
+input ScanResolutionRelateToOneForCreateInput {
+  create: ScanResolutionCreateInput
+  connect: ScanResolutionWhereUniqueInput
+}
+
+input OrderStatusRelateToOneForCreateInput {
+  create: OrderStatusCreateInput
+  connect: OrderStatusWhereUniqueInput
+}
+
+input OrderRelateToOneForCreateInput {
+  create: OrderCreateInput
+  connect: OrderWhereUniqueInput
+}
+
+input UserRelateToOneForCreateInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+}
+
+type CartProcessProduct {
+  id: ID!
+  notes: String
+  noDevelop: Boolean
+  noScans: Boolean
+  isSingle: Boolean
+  isSlide: Boolean
+  filmType: FilmType
+  filmColour: FilmColour
+  scanResolution: ScanResolution
+  singleQuantity: Int
+  status: String
+  user: User
+  price: Int
+  createdOn: DateTime
+  updatedOn: DateTime
+}
+
+input CartProcessProductWhereUniqueInput {
+  id: ID
+}
+
+input CartProcessProductWhereInput {
+  AND: [CartProcessProductWhereInput!]
+  OR: [CartProcessProductWhereInput!]
+  NOT: [CartProcessProductWhereInput!]
+  id: IDFilter
+  notes: StringFilter
+  noDevelop: BooleanFilter
+  noScans: BooleanFilter
+  isSingle: BooleanFilter
+  isSlide: BooleanFilter
+  filmType: FilmTypeWhereInput
+  filmColour: FilmColourWhereInput
+  scanResolution: ScanResolutionWhereInput
+  singleQuantity: IntNullableFilter
+  status: StringNullableFilter
+  user: UserWhereInput
+  price: IntNullableFilter
+  createdOn: DateTimeNullableFilter
+  updatedOn: DateTimeNullableFilter
+}
+
+input CartProcessProductOrderByInput {
+  id: OrderDirection
+  notes: OrderDirection
+  noDevelop: OrderDirection
+  noScans: OrderDirection
+  isSingle: OrderDirection
+  isSlide: OrderDirection
+  singleQuantity: OrderDirection
+  status: OrderDirection
+  price: OrderDirection
+  createdOn: OrderDirection
+  updatedOn: OrderDirection
+}
+
+input CartProcessProductUpdateInput {
+  notes: String
+  noDevelop: Boolean
+  noScans: Boolean
+  isSingle: Boolean
+  isSlide: Boolean
+  filmType: FilmTypeRelateToOneForUpdateInput
+  filmColour: FilmColourRelateToOneForUpdateInput
+  scanResolution: ScanResolutionRelateToOneForUpdateInput
+  singleQuantity: Int
+  status: String
+  user: UserRelateToOneForUpdateInput
+  price: Int
+  createdOn: DateTime
+  updatedOn: DateTime
+}
+
+input CartProcessProductUpdateArgs {
+  where: CartProcessProductWhereUniqueInput!
+  data: CartProcessProductUpdateInput!
+}
+
+input CartProcessProductCreateInput {
+  notes: String
+  noDevelop: Boolean
+  noScans: Boolean
+  isSingle: Boolean
+  isSlide: Boolean
+  filmType: FilmTypeRelateToOneForCreateInput
+  filmColour: FilmColourRelateToOneForCreateInput
+  scanResolution: ScanResolutionRelateToOneForCreateInput
+  singleQuantity: Int
+  status: String
+  user: UserRelateToOneForCreateInput
+  price: Int
+  createdOn: DateTime
+  updatedOn: DateTime
+}
+
+type FilmColour {
+  id: ID!
+  name: String
+  description: String
+  developCost: Int
+}
+
+input FilmColourWhereUniqueInput {
+  id: ID
+}
+
+input FilmColourWhereInput {
+  AND: [FilmColourWhereInput!]
+  OR: [FilmColourWhereInput!]
+  NOT: [FilmColourWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  description: StringFilter
+  developCost: IntNullableFilter
+}
+
+input FilmColourOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  description: OrderDirection
+  developCost: OrderDirection
+}
+
+input FilmColourUpdateInput {
+  name: String
+  description: String
+  developCost: Int
+}
+
+input FilmColourUpdateArgs {
+  where: FilmColourWhereUniqueInput!
+  data: FilmColourUpdateInput!
+}
+
+input FilmColourCreateInput {
+  name: String
+  description: String
+  developCost: Int
+}
+
+type FilmType {
+  id: ID!
+  name: String
+  description: String
+  isSingle: Boolean
+  isSlide: Boolean
+  scanOnlyCost: Int
+}
+
+input FilmTypeWhereUniqueInput {
+  id: ID
+}
+
+input FilmTypeWhereInput {
+  AND: [FilmTypeWhereInput!]
+  OR: [FilmTypeWhereInput!]
+  NOT: [FilmTypeWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  description: StringFilter
+  isSingle: BooleanFilter
+  isSlide: BooleanFilter
+  scanOnlyCost: IntNullableFilter
+}
+
+input FilmTypeOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  description: OrderDirection
+  isSingle: OrderDirection
+  isSlide: OrderDirection
+  scanOnlyCost: OrderDirection
+}
+
+input FilmTypeUpdateInput {
+  name: String
+  description: String
+  isSingle: Boolean
+  isSlide: Boolean
+  scanOnlyCost: Int
+}
+
+input FilmTypeUpdateArgs {
+  where: FilmTypeWhereUniqueInput!
+  data: FilmTypeUpdateInput!
+}
+
+input FilmTypeCreateInput {
+  name: String
+  description: String
+  isSingle: Boolean
+  isSlide: Boolean
+  scanOnlyCost: Int
+}
+
+type ScanResolution {
+  id: ID!
+  name: String
+  description: String
+  scanCost: Int
+  scanOnlyCost: Int
+  singleFrameCost: Int
+}
+
+input ScanResolutionWhereUniqueInput {
+  id: ID
+}
+
+input ScanResolutionWhereInput {
+  AND: [ScanResolutionWhereInput!]
+  OR: [ScanResolutionWhereInput!]
+  NOT: [ScanResolutionWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  description: StringFilter
+  scanCost: IntNullableFilter
+  scanOnlyCost: IntNullableFilter
+  singleFrameCost: IntNullableFilter
+}
+
+input ScanResolutionOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  description: OrderDirection
+  scanCost: OrderDirection
+  scanOnlyCost: OrderDirection
+  singleFrameCost: OrderDirection
+}
+
+input ScanResolutionUpdateInput {
+  name: String
+  description: String
+  scanCost: Int
+  scanOnlyCost: Int
+  singleFrameCost: Int
+}
+
+input ScanResolutionUpdateArgs {
+  where: ScanResolutionWhereUniqueInput!
+  data: ScanResolutionUpdateInput!
+}
+
+input ScanResolutionCreateInput {
+  name: String
+  description: String
+  scanCost: Int
+  scanOnlyCost: Int
+  singleFrameCost: Int
+}
+
 type CartItem {
   id: ID!
   quantity: Int
@@ -551,86 +1176,67 @@ input CartItemCreateInput {
   user: UserRelateToOneForCreateInput
 }
 
-type OrderItem {
+type OrderStatus {
   id: ID!
   name: String
   description: String
-  photo: ProductImage
-  price: Int
-  quantity: Int
-  order: Order
+  orders(
+    where: ProcessProductWhereInput! = {}
+    orderBy: [ProcessProductOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [ProcessProduct!]
+  ordersCount(where: ProcessProductWhereInput! = {}): Int
 }
 
-input OrderItemWhereUniqueInput {
+input OrderStatusWhereUniqueInput {
   id: ID
 }
 
-input OrderItemWhereInput {
-  AND: [OrderItemWhereInput!]
-  OR: [OrderItemWhereInput!]
-  NOT: [OrderItemWhereInput!]
+input OrderStatusWhereInput {
+  AND: [OrderStatusWhereInput!]
+  OR: [OrderStatusWhereInput!]
+  NOT: [OrderStatusWhereInput!]
   id: IDFilter
   name: StringFilter
   description: StringFilter
-  photo: ProductImageWhereInput
-  price: IntNullableFilter
-  quantity: IntNullableFilter
-  order: OrderWhereInput
+  orders: ProcessProductManyRelationFilter
 }
 
-input OrderItemOrderByInput {
+input OrderStatusOrderByInput {
   id: OrderDirection
   name: OrderDirection
   description: OrderDirection
-  price: OrderDirection
-  quantity: OrderDirection
 }
 
-input OrderItemUpdateInput {
+input OrderStatusUpdateInput {
   name: String
   description: String
-  photo: ProductImageRelateToOneForUpdateInput
-  price: Int
-  quantity: Int
-  order: OrderRelateToOneForUpdateInput
+  orders: ProcessProductRelateToManyForUpdateInput
 }
 
-input OrderRelateToOneForUpdateInput {
-  create: OrderCreateInput
-  connect: OrderWhereUniqueInput
-  disconnect: Boolean
+input OrderStatusUpdateArgs {
+  where: OrderStatusWhereUniqueInput!
+  data: OrderStatusUpdateInput!
 }
 
-input OrderItemUpdateArgs {
-  where: OrderItemWhereUniqueInput!
-  data: OrderItemUpdateInput!
-}
-
-input OrderItemCreateInput {
+input OrderStatusCreateInput {
   name: String
   description: String
-  photo: ProductImageRelateToOneForCreateInput
-  price: Int
-  quantity: Int
-  order: OrderRelateToOneForCreateInput
-}
-
-input OrderRelateToOneForCreateInput {
-  create: OrderCreateInput
-  connect: OrderWhereUniqueInput
+  orders: ProcessProductRelateToManyForCreateInput
 }
 
 type Order {
   id: ID!
   label: String
   total: Int
-  items(
-    where: OrderItemWhereInput! = {}
-    orderBy: [OrderItemOrderByInput!]! = []
+  processProducts(
+    where: ProcessProductWhereInput! = {}
+    orderBy: [ProcessProductOrderByInput!]! = []
     take: Int
     skip: Int! = 0
-  ): [OrderItem!]
-  itemsCount(where: OrderItemWhereInput! = {}): Int
+  ): [ProcessProduct!]
+  processProductsCount(where: ProcessProductWhereInput! = {}): Int
   user: User
   charge: String
 }
@@ -645,15 +1251,9 @@ input OrderWhereInput {
   NOT: [OrderWhereInput!]
   id: IDFilter
   total: IntNullableFilter
-  items: OrderItemManyRelationFilter
+  processProducts: ProcessProductManyRelationFilter
   user: UserWhereInput
   charge: StringFilter
-}
-
-input OrderItemManyRelationFilter {
-  every: OrderItemWhereInput
-  some: OrderItemWhereInput
-  none: OrderItemWhereInput
 }
 
 input OrderOrderByInput {
@@ -664,16 +1264,9 @@ input OrderOrderByInput {
 
 input OrderUpdateInput {
   total: Int
-  items: OrderItemRelateToManyForUpdateInput
+  processProducts: ProcessProductRelateToManyForUpdateInput
   user: UserRelateToOneForUpdateInput
   charge: String
-}
-
-input OrderItemRelateToManyForUpdateInput {
-  disconnect: [OrderItemWhereUniqueInput!]
-  set: [OrderItemWhereUniqueInput!]
-  create: [OrderItemCreateInput!]
-  connect: [OrderItemWhereUniqueInput!]
 }
 
 input OrderUpdateArgs {
@@ -683,112 +1276,9 @@ input OrderUpdateArgs {
 
 input OrderCreateInput {
   total: Int
-  items: OrderItemRelateToManyForCreateInput
+  processProducts: ProcessProductRelateToManyForCreateInput
   user: UserRelateToOneForCreateInput
   charge: String
-}
-
-input OrderItemRelateToManyForCreateInput {
-  create: [OrderItemCreateInput!]
-  connect: [OrderItemWhereUniqueInput!]
-}
-
-type Role {
-  id: ID!
-  name: String
-  canManageProducts: Boolean
-  canSeeOtherUsers: Boolean
-  canManageUsers: Boolean
-  canManageRoles: Boolean
-  canManageCart: Boolean
-  canManageOrders: Boolean
-  assignedTo(
-    where: UserWhereInput! = {}
-    orderBy: [UserOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [User!]
-  assignedToCount(where: UserWhereInput! = {}): Int
-}
-
-input RoleWhereUniqueInput {
-  id: ID
-}
-
-input RoleWhereInput {
-  AND: [RoleWhereInput!]
-  OR: [RoleWhereInput!]
-  NOT: [RoleWhereInput!]
-  id: IDFilter
-  name: StringFilter
-  canManageProducts: BooleanFilter
-  canSeeOtherUsers: BooleanFilter
-  canManageUsers: BooleanFilter
-  canManageRoles: BooleanFilter
-  canManageCart: BooleanFilter
-  canManageOrders: BooleanFilter
-  assignedTo: UserManyRelationFilter
-}
-
-input BooleanFilter {
-  equals: Boolean
-  not: BooleanFilter
-}
-
-input UserManyRelationFilter {
-  every: UserWhereInput
-  some: UserWhereInput
-  none: UserWhereInput
-}
-
-input RoleOrderByInput {
-  id: OrderDirection
-  name: OrderDirection
-  canManageProducts: OrderDirection
-  canSeeOtherUsers: OrderDirection
-  canManageUsers: OrderDirection
-  canManageRoles: OrderDirection
-  canManageCart: OrderDirection
-  canManageOrders: OrderDirection
-}
-
-input RoleUpdateInput {
-  name: String
-  canManageProducts: Boolean
-  canSeeOtherUsers: Boolean
-  canManageUsers: Boolean
-  canManageRoles: Boolean
-  canManageCart: Boolean
-  canManageOrders: Boolean
-  assignedTo: UserRelateToManyForUpdateInput
-}
-
-input UserRelateToManyForUpdateInput {
-  disconnect: [UserWhereUniqueInput!]
-  set: [UserWhereUniqueInput!]
-  create: [UserCreateInput!]
-  connect: [UserWhereUniqueInput!]
-}
-
-input RoleUpdateArgs {
-  where: RoleWhereUniqueInput!
-  data: RoleUpdateInput!
-}
-
-input RoleCreateInput {
-  name: String
-  canManageProducts: Boolean
-  canSeeOtherUsers: Boolean
-  canManageUsers: Boolean
-  canManageRoles: Boolean
-  canManageCart: Boolean
-  canManageOrders: Boolean
-  assignedTo: UserRelateToManyForCreateInput
-}
-
-input UserRelateToManyForCreateInput {
-  create: [UserCreateInput!]
-  connect: [UserWhereUniqueInput!]
 }
 
 """
@@ -818,6 +1308,17 @@ input CreateInitialUserInput {
   password: String
 }
 
+type RedeemUserPasswordResetTokenResult {
+  code: PasswordResetRedemptionErrorCode!
+  message: String!
+}
+
+enum PasswordResetRedemptionErrorCode {
+  FAILURE
+  TOKEN_EXPIRED
+  TOKEN_REDEEMED
+}
+
 type Query {
   users(
     where: UserWhereInput! = {}
@@ -827,6 +1328,14 @@ type Query {
   ): [User!]
   user(where: UserWhereUniqueInput!): User
   usersCount(where: UserWhereInput! = {}): Int
+  roles(
+    where: RoleWhereInput! = {}
+    orderBy: [RoleOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Role!]
+  role(where: RoleWhereUniqueInput!): Role
+  rolesCount(where: RoleWhereInput! = {}): Int
   products(
     where: ProductWhereInput! = {}
     orderBy: [ProductOrderByInput!]! = []
@@ -843,6 +1352,48 @@ type Query {
   ): [ProductImage!]
   productImage(where: ProductImageWhereUniqueInput!): ProductImage
   productImagesCount(where: ProductImageWhereInput! = {}): Int
+  processProducts(
+    where: ProcessProductWhereInput! = {}
+    orderBy: [ProcessProductOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [ProcessProduct!]
+  processProduct(where: ProcessProductWhereUniqueInput!): ProcessProduct
+  processProductsCount(where: ProcessProductWhereInput! = {}): Int
+  cartProcessProducts(
+    where: CartProcessProductWhereInput! = {}
+    orderBy: [CartProcessProductOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [CartProcessProduct!]
+  cartProcessProduct(
+    where: CartProcessProductWhereUniqueInput!
+  ): CartProcessProduct
+  cartProcessProductsCount(where: CartProcessProductWhereInput! = {}): Int
+  filmColours(
+    where: FilmColourWhereInput! = {}
+    orderBy: [FilmColourOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [FilmColour!]
+  filmColour(where: FilmColourWhereUniqueInput!): FilmColour
+  filmColoursCount(where: FilmColourWhereInput! = {}): Int
+  filmTypes(
+    where: FilmTypeWhereInput! = {}
+    orderBy: [FilmTypeOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [FilmType!]
+  filmType(where: FilmTypeWhereUniqueInput!): FilmType
+  filmTypesCount(where: FilmTypeWhereInput! = {}): Int
+  scanResolutions(
+    where: ScanResolutionWhereInput! = {}
+    orderBy: [ScanResolutionOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [ScanResolution!]
+  scanResolution(where: ScanResolutionWhereUniqueInput!): ScanResolution
+  scanResolutionsCount(where: ScanResolutionWhereInput! = {}): Int
   cartItems(
     where: CartItemWhereInput! = {}
     orderBy: [CartItemOrderByInput!]! = []
@@ -851,14 +1402,14 @@ type Query {
   ): [CartItem!]
   cartItem(where: CartItemWhereUniqueInput!): CartItem
   cartItemsCount(where: CartItemWhereInput! = {}): Int
-  orderItems(
-    where: OrderItemWhereInput! = {}
-    orderBy: [OrderItemOrderByInput!]! = []
+  orderStatuses(
+    where: OrderStatusWhereInput! = {}
+    orderBy: [OrderStatusOrderByInput!]! = []
     take: Int
     skip: Int! = 0
-  ): [OrderItem!]
-  orderItem(where: OrderItemWhereUniqueInput!): OrderItem
-  orderItemsCount(where: OrderItemWhereInput! = {}): Int
+  ): [OrderStatus!]
+  orderStatus(where: OrderStatusWhereUniqueInput!): OrderStatus
+  orderStatusesCount(where: OrderStatusWhereInput! = {}): Int
   orders(
     where: OrderWhereInput! = {}
     orderBy: [OrderOrderByInput!]! = []
@@ -867,19 +1418,20 @@ type Query {
   ): [Order!]
   order(where: OrderWhereUniqueInput!): Order
   ordersCount(where: OrderWhereInput! = {}): Int
-  roles(
-    where: RoleWhereInput! = {}
-    orderBy: [RoleOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [Role!]
-  role(where: RoleWhereUniqueInput!): Role
-  rolesCount(where: RoleWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
+  validateUserPasswordResetToken(
+    email: String!
+    token: String!
+  ): ValidateUserPasswordResetTokenResult
 }
 
 union AuthenticatedItem = User
+
+type ValidateUserPasswordResetTokenResult {
+  code: PasswordResetRedemptionErrorCode!
+  message: String!
+}
 
 type KeystoneMeta {
   adminMeta: KeystoneAdminMeta!

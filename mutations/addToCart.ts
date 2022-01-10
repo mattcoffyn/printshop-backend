@@ -14,14 +14,19 @@ async function addToCart(
   }
   // 2. Query the current users cart
   const allCartItems = await context.query.CartItem.findMany({
-    where: { user: { id: { equals: sesh.itemId } }, product: { id: { equals: productId } } },
+    where: {
+      user: { id: { equals: sesh.itemId } },
+      product: { id: { equals: productId } },
+    },
     query: 'id quantity',
   });
 
   const [existingCartItem] = allCartItems;
   if (existingCartItem) {
     console.log(existingCartItem);
-    console.log(`There are already ${existingCartItem.quantity}, increment by 1!`);
+    console.log(
+      `There are already ${existingCartItem.quantity}, increment by 1!`
+    );
     // 3. See if the current item is in their cart
     // 4. if itis, increment by 1
     return await context.db.CartItem.updateOne({

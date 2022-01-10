@@ -1,4 +1,10 @@
-import { integer, text, relationship, virtual } from '@keystone-6/core/fields';
+import {
+  integer,
+  select,
+  text,
+  relationship,
+  virtual,
+} from '@keystone-6/core/fields';
 import { list, graphql } from '@keystone-6/core';
 import { isSignedIn, rules } from '../access';
 import formatMoney from '../lib/formatMoney';
@@ -12,6 +18,9 @@ export const Order = list({
     },
     filter: { query: rules.canOrder },
   },
+  db: {
+    idField: { kind: 'autoincrement' },
+  },
   fields: {
     label: virtual({
       field: graphql.field({
@@ -22,7 +31,7 @@ export const Order = list({
       }),
     }),
     total: integer(),
-    items: relationship({ ref: 'OrderItem.order', many: true }),
+    processProducts: relationship({ ref: 'ProcessProduct.order', many: true }),
     user: relationship({ ref: 'User.orders' }),
     charge: text(),
   },

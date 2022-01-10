@@ -1,20 +1,21 @@
 import { graphQLSchemaExtension } from '@keystone-6/core';
 import addToCart from './addToCart';
-import checkout from './checkout';
+import sendEmail from './completedEmail';
 
-// make a fake graphql tagged template literal
+// fake syntax highlighter
 const graphql = String.raw;
+
 export const extendGraphqlSchema = graphQLSchemaExtension({
   typeDefs: graphql`
     type Mutation {
       addToCart(productId: ID): CartItem
-      checkout(token: String!): Order
+      sendEmail(processProductId: ID): ProcessProduct
     }
   `,
   resolvers: {
     Mutation: {
       addToCart,
-      checkout,
+      sendEmail,
     },
   },
 });

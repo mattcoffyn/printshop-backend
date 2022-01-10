@@ -1,20 +1,24 @@
-import { integer, select, text, relationship } from '@keystone-6/core/fields';
+import { integer, relationship, select, text } from '@keystone-6/core/fields';
 import { list } from '@keystone-6/core';
 import { rules, isSignedIn } from '../access';
 
 export const Product = list({
-  access: {
-    operation: {
-      create: isSignedIn,
-    },
-    filter: {
-      query: rules.canReadProducts,
-      update: rules.canManageProducts,
-      delete: rules.canManageProducts,
-    },
-  },
+  // access: {
+  //   operation: {
+  //     create: isSignedIn,
+  //   },
+  //   filter: {
+  //     query: rules.canOrder,
+  //     update: rules.canOrder,
+  //     delete: rules.canOrder,
+  //   },
+  // },
   fields: {
-    name: text({ validation: { isRequired: true } }),
+    name: text({
+      validation: {
+        isRequired: true,
+      },
+    }),
     description: text({
       ui: {
         displayMode: 'textarea',
@@ -42,17 +46,6 @@ export const Product = list({
       },
     }),
     price: integer(),
-    user: relationship({
-      ref: 'User.products',
-      hooks: {
-        resolveInput({ operation, resolvedData, context }) {
-          // Default to the currently logged in user on create.
-          if (operation === 'create' && !resolvedData.user && context.session?.itemId) {
-            return { connect: { id: context.session?.itemId } };
-          }
-          return resolvedData.user;
-        },
-      },
-    }),
+    // TODO: Photo
   },
 });

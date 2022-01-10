@@ -12,78 +12,21 @@ generator client {
 }
 
 model User {
-  id       String     @id @default(cuid())
-  name     String     @default("")
-  email    String     @unique @default("")
-  password String?
-  cart     CartItem[] @relation("CartItem_user")
-  orders   Order[]    @relation("Order_user")
-  role     Role?      @relation("User_role", fields: [roleId], references: [id])
-  roleId   String?    @map("role")
-  products Product[]  @relation("Product_user")
+  id                      Int                  @id @default(autoincrement())
+  name                    String               @default("")
+  email                   String               @unique @default("")
+  password                String?
+  cart                    CartItem[]           @relation("CartItem_user")
+  role                    Role?                @relation("User_role", fields: [roleId], references: [id])
+  roleId                  String?              @map("role")
+  orders                  Order[]              @relation("Order_user")
+  processProducts         ProcessProduct[]     @relation("ProcessProduct_user")
+  cartProcessProducts     CartProcessProduct[] @relation("CartProcessProduct_user")
+  passwordResetToken      String?
+  passwordResetIssuedAt   DateTime?
+  passwordResetRedeemedAt DateTime?
 
   @@index([roleId])
-}
-
-model Product {
-  id                    String        @id @default(cuid())
-  name                  String        @default("")
-  description           String        @default("")
-  photo                 ProductImage? @relation("Product_photo", fields: [photoId], references: [id])
-  photoId               String?       @unique @map("photo")
-  status                String?       @default("DRAFT")
-  price                 Int?
-  user                  User?         @relation("Product_user", fields: [userId], references: [id])
-  userId                String?       @map("user")
-  from_CartItem_product CartItem[]    @relation("CartItem_product")
-
-  @@index([userId])
-}
-
-model ProductImage {
-  id                   String      @id @default(cuid())
-  image                Json?
-  altText              String      @default("")
-  product              Product?    @relation("Product_photo")
-  from_OrderItem_photo OrderItem[] @relation("OrderItem_photo")
-}
-
-model CartItem {
-  id        String   @id @default(cuid())
-  quantity  Int      @default(1)
-  product   Product? @relation("CartItem_product", fields: [productId], references: [id])
-  productId String?  @map("product")
-  user      User?    @relation("CartItem_user", fields: [userId], references: [id])
-  userId    String?  @map("user")
-
-  @@index([productId])
-  @@index([userId])
-}
-
-model OrderItem {
-  id          String        @id @default(cuid())
-  name        String        @default("")
-  description String        @default("")
-  photo       ProductImage? @relation("OrderItem_photo", fields: [photoId], references: [id])
-  photoId     String?       @map("photo")
-  price       Int?
-  quantity    Int?
-  order       Order?        @relation("OrderItem_order", fields: [orderId], references: [id])
-  orderId     String?       @map("order")
-
-  @@index([photoId])
-  @@index([orderId])
-}
-
-model Order {
-  id     String      @id @default(cuid())
-  total  Int?
-  items  OrderItem[] @relation("OrderItem_order")
-  user   User?       @relation("Order_user", fields: [userId], references: [id])
-  userId String?     @map("user")
-  charge String      @default("")
-
-  @@index([userId])
 }
 
 model Role {
@@ -96,4 +39,143 @@ model Role {
   canManageCart     Boolean @default(false)
   canManageOrders   Boolean @default(false)
   assignedTo        User[]  @relation("User_role")
+}
+
+model Product {
+  id                    String        @id @default(cuid())
+  name                  String        @default("")
+  description           String        @default("")
+  photo                 ProductImage? @relation("Product_photo", fields: [photoId], references: [id])
+  photoId               String?       @unique @map("photo")
+  status                String?       @default("DRAFT")
+  price                 Int?
+  from_CartItem_product CartItem[]    @relation("CartItem_product")
+}
+
+model ProductImage {
+  id      String   @id @default(cuid())
+  image   Json?
+  altText String   @default("")
+  product Product? @relation("Product_photo")
+}
+
+model ProcessProduct {
+  id               Int             @id @default(autoincrement())
+  notes            String          @default("")
+  noDevelop        Boolean         @default(false)
+  noScans          Boolean         @default(false)
+  isSingle         Boolean         @default(false)
+  isSlide          Boolean         @default(false)
+  filmType         FilmType?       @relation("ProcessProduct_filmType", fields: [filmTypeId], references: [id])
+  filmTypeId       String?         @map("filmType")
+  filmColour       FilmColour?     @relation("ProcessProduct_filmColour", fields: [filmColourId], references: [id])
+  filmColourId     String?         @map("filmColour")
+  scanResolution   ScanResolution? @relation("ProcessProduct_scanResolution", fields: [scanResolutionId], references: [id])
+  scanResolutionId String?         @map("scanResolution")
+  singleQuantity   Int?
+  status           String?         @default("AWAITING_FILM")
+  orderStatus      OrderStatus?    @relation("ProcessProduct_orderStatus", fields: [orderStatusId], references: [id])
+  orderStatusId    Int?            @map("orderStatus")
+  order            Order?          @relation("ProcessProduct_order", fields: [orderId], references: [id])
+  orderId          Int?            @map("order")
+  user             User?           @relation("ProcessProduct_user", fields: [userId], references: [id])
+  userId           Int?            @map("user")
+  price            Int?
+  createdOn        DateTime?
+  updatedOn        DateTime?
+
+  @@index([filmTypeId])
+  @@index([filmColourId])
+  @@index([scanResolutionId])
+  @@index([orderStatusId])
+  @@index([orderId])
+  @@index([userId])
+}
+
+model CartProcessProduct {
+  id               String          @id @default(cuid())
+  notes            String          @default("")
+  noDevelop        Boolean         @default(false)
+  noScans          Boolean         @default(false)
+  isSingle         Boolean         @default(false)
+  isSlide          Boolean         @default(false)
+  filmType         FilmType?       @relation("CartProcessProduct_filmType", fields: [filmTypeId], references: [id])
+  filmTypeId       String?         @map("filmType")
+  filmColour       FilmColour?     @relation("CartProcessProduct_filmColour", fields: [filmColourId], references: [id])
+  filmColourId     String?         @map("filmColour")
+  scanResolution   ScanResolution? @relation("CartProcessProduct_scanResolution", fields: [scanResolutionId], references: [id])
+  scanResolutionId String?         @map("scanResolution")
+  singleQuantity   Int?
+  status           String?         @default("AWAITING_FILM")
+  user             User?           @relation("CartProcessProduct_user", fields: [userId], references: [id])
+  userId           Int?            @map("user")
+  price            Int?
+  createdOn        DateTime?
+  updatedOn        DateTime?
+
+  @@index([filmTypeId])
+  @@index([filmColourId])
+  @@index([scanResolutionId])
+  @@index([userId])
+}
+
+model FilmColour {
+  id                                 String               @id @default(cuid())
+  name                               String               @default("")
+  description                        String               @default("")
+  developCost                        Int?
+  from_ProcessProduct_filmColour     ProcessProduct[]     @relation("ProcessProduct_filmColour")
+  from_CartProcessProduct_filmColour CartProcessProduct[] @relation("CartProcessProduct_filmColour")
+}
+
+model FilmType {
+  id                               String               @id @default(cuid())
+  name                             String               @default("")
+  description                      String               @default("")
+  isSingle                         Boolean              @default(false)
+  isSlide                          Boolean              @default(false)
+  scanOnlyCost                     Int?
+  from_ProcessProduct_filmType     ProcessProduct[]     @relation("ProcessProduct_filmType")
+  from_CartProcessProduct_filmType CartProcessProduct[] @relation("CartProcessProduct_filmType")
+}
+
+model ScanResolution {
+  id                                     String               @id @default(cuid())
+  name                                   String               @default("")
+  description                            String               @default("")
+  scanCost                               Int?
+  scanOnlyCost                           Int?
+  singleFrameCost                        Int?
+  from_ProcessProduct_scanResolution     ProcessProduct[]     @relation("ProcessProduct_scanResolution")
+  from_CartProcessProduct_scanResolution CartProcessProduct[] @relation("CartProcessProduct_scanResolution")
+}
+
+model CartItem {
+  id        Int      @id @default(autoincrement())
+  quantity  Int      @default(1)
+  product   Product? @relation("CartItem_product", fields: [productId], references: [id])
+  productId String?  @map("product")
+  user      User?    @relation("CartItem_user", fields: [userId], references: [id])
+  userId    Int?     @map("user")
+
+  @@index([productId])
+  @@index([userId])
+}
+
+model OrderStatus {
+  id          Int              @id @default(autoincrement())
+  name        String           @default("")
+  description String           @default("")
+  orders      ProcessProduct[] @relation("ProcessProduct_orderStatus")
+}
+
+model Order {
+  id              Int              @id @default(autoincrement())
+  total           Int?
+  processProducts ProcessProduct[] @relation("ProcessProduct_order")
+  user            User?            @relation("Order_user", fields: [userId], references: [id])
+  userId          Int?             @map("user")
+  charge          String           @default("")
+
+  @@index([userId])
 }

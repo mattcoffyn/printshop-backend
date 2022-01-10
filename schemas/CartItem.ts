@@ -1,4 +1,4 @@
-import { integer, relationship } from '@keystone-6/core/fields';
+import { integer, relationship, select, text } from '@keystone-6/core/fields';
 import { list } from '@keystone-6/core';
 import { rules, isSignedIn } from '../access';
 
@@ -13,13 +13,15 @@ export const CartItem = list({
       delete: rules.canOrder,
     },
   },
-  ui: {
-    listView: {
-      initialColumns: ['product', 'quantity', 'user'],
-    },
+  // ui: {
+  //   listView: {
+  //     initialColumns: ['user', 'product', 'quantity'],
+  //   },
+  // },
+  db: {
+    idField: { kind: 'autoincrement' },
   },
   fields: {
-    // TODO: Custom Label in here
     quantity: integer({
       defaultValue: 1,
       validation: {
@@ -27,6 +29,7 @@ export const CartItem = list({
       },
     }),
     product: relationship({ ref: 'Product' }),
+    // processProduct: relationship({ ref: 'processProduct' }),
     user: relationship({ ref: 'User.cart' }),
   },
 });
