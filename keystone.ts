@@ -20,8 +20,14 @@ import { sendPasswordResetEmail } from './lib/mail';
 import { extendGraphqlSchema } from './mutations';
 
 const databaseURL = process.env.DATABASE_URL || 'file:./keystone.db';
-const frontendURL = process.env.FRONTEND_URL || 'localhost:4000';
-const dashboardURL = process.env.DASHBOARD_URL || 'localhost:5000';
+const dashboardURL = process.env.DASHBOARD_URL || 'http://localhost:4000';
+const frontendURL = process.env.FRONTEND_URL || 'http://localhost:5000';
+const sessionSecret =
+  process.env.SESSION_SECRET ||
+  require('crypto')
+    .randomBytes(32)
+    .toString('base64')
+    .replace(/[^a-zA-Z0-9]+/g, '');
 
 const { withAuth } = createAuth({
   listKey: 'User',
@@ -40,11 +46,6 @@ const { withAuth } = createAuth({
   sessionData: `id name email role { ${permissionsList.join(' ')} }`,
   // sessionData: `id name email role { ${permissionsList.join(' ')} }`,
 });
-
-const sessionConfig = {
-  maxAge: 60 * 60 * 24 * 360, // How long they stay signed in?
-  secret: 'this secret should only be used in testing',
-};
 
 const lists = {
   // Schema items go in here
@@ -66,6 +67,7 @@ export default withAuth(
   config({
     server: {
       cors: {
+        // origin: [frontendURL, dashboardURL, 'https://studio.apollographql.com'],
         origin: [frontendURL, dashboardURL, 'https://studio.apollographql.com'],
         credentials: true,
       },
@@ -86,6 +88,8 @@ export default withAuth(
       // Show the UI only for poeple who pass this test
       isAccessAllowed: ({ session }) => !!session,
     },
-    session: statelessSessions(sessionConfig),
+    session: statelessSessions({
+      secret: sessionSecret,
+    }),
   })
 );
