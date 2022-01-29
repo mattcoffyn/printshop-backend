@@ -21,6 +21,8 @@ import { extendGraphqlSchema } from './mutations';
 
 const databaseURL = process.env.DATABASE_URL || 'file:./keystone.db';
 const dashboardURL = process.env.DASHBOARD_URL || 'http://localhost:4000';
+const deployURL =
+  process.env.DEPLOY_URL || 'https://printshop-dashboard.vercel.app';
 const frontendURL = process.env.FRONTEND_URL || 'http://localhost:5000';
 const sessionSecret =
   process.env.SESSION_SECRET ||
@@ -68,7 +70,12 @@ export default withAuth(
     server: {
       cors: {
         // origin: [frontendURL, dashboardURL, 'https://studio.apollographql.com'],
-        origin: [frontendURL, dashboardURL, 'https://studio.apollographql.com'],
+        origin: [
+          frontendURL,
+          dashboardURL,
+          deployURL,
+          'https://studio.apollographql.com',
+        ],
         credentials: true,
       },
     },
@@ -90,6 +97,9 @@ export default withAuth(
     },
     session: statelessSessions({
       secret: sessionSecret,
+      maxAge: 60 * 60 * 24,
+      secure: true,
+      sameSite: 'none',
     }),
   })
 );

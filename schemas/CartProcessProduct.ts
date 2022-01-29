@@ -77,6 +77,10 @@ export const CartProcessProduct = list({
     user: relationship({ ref: 'User.cartProcessProducts' }),
     price: integer(),
     createdOn: timestamp(),
-    updatedOn: timestamp(),
+    updatedOn: timestamp({
+      db: {
+        updatedAt: true,
+      },
+    }),
   },
 });

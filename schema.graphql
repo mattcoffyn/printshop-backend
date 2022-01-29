@@ -167,6 +167,9 @@ type User {
     skip: Int! = 0
   ): [CartProcessProduct!]
   cartProcessProductsCount(where: CartProcessProductWhereInput! = {}): Int
+  createdOn: DateTime
+  updatedOn: DateTime
+  history: JSON
   passwordResetToken: PasswordState
   passwordResetIssuedAt: DateTime
   passwordResetRedeemedAt: DateTime
@@ -197,6 +200,8 @@ input UserWhereInput {
   orders: OrderManyRelationFilter
   processProducts: ProcessProductManyRelationFilter
   cartProcessProducts: CartProcessProductManyRelationFilter
+  createdOn: DateTimeNullableFilter
+  updatedOn: DateTimeNullableFilter
   passwordResetToken: PasswordFilter
   passwordResetIssuedAt: DateTimeNullableFilter
   passwordResetRedeemedAt: DateTimeNullableFilter
@@ -290,6 +295,8 @@ input UserOrderByInput {
   id: OrderDirection
   name: OrderDirection
   email: OrderDirection
+  createdOn: OrderDirection
+  updatedOn: OrderDirection
   passwordResetIssuedAt: OrderDirection
   passwordResetRedeemedAt: OrderDirection
 }
@@ -308,6 +315,9 @@ input UserUpdateInput {
   orders: OrderRelateToManyForUpdateInput
   processProducts: ProcessProductRelateToManyForUpdateInput
   cartProcessProducts: CartProcessProductRelateToManyForUpdateInput
+  createdOn: DateTime
+  updatedOn: DateTime
+  history: JSON
   passwordResetToken: String
   passwordResetIssuedAt: DateTime
   passwordResetRedeemedAt: DateTime
@@ -361,6 +371,9 @@ input UserCreateInput {
   orders: OrderRelateToManyForCreateInput
   processProducts: ProcessProductRelateToManyForCreateInput
   cartProcessProducts: CartProcessProductRelateToManyForCreateInput
+  createdOn: DateTime
+  updatedOn: DateTime
+  history: JSON
   passwordResetToken: String
   passwordResetIssuedAt: DateTime
   passwordResetRedeemedAt: DateTime
@@ -1228,7 +1241,6 @@ input OrderStatusCreateInput {
 
 type Order {
   id: ID!
-  label: String
   total: Int
   processProducts(
     where: ProcessProductWhereInput! = {}
@@ -1239,6 +1251,8 @@ type Order {
   processProductsCount(where: ProcessProductWhereInput! = {}): Int
   user: User
   charge: String
+  createdAt: DateTime
+  updatedAt: DateTime
 }
 
 input OrderWhereUniqueInput {
@@ -1254,12 +1268,16 @@ input OrderWhereInput {
   processProducts: ProcessProductManyRelationFilter
   user: UserWhereInput
   charge: StringFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
 }
 
 input OrderOrderByInput {
   id: OrderDirection
   total: OrderDirection
   charge: OrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
 }
 
 input OrderUpdateInput {
@@ -1267,6 +1285,8 @@ input OrderUpdateInput {
   processProducts: ProcessProductRelateToManyForUpdateInput
   user: UserRelateToOneForUpdateInput
   charge: String
+  createdAt: DateTime
+  updatedAt: DateTime
 }
 
 input OrderUpdateArgs {
@@ -1279,6 +1299,8 @@ input OrderCreateInput {
   processProducts: ProcessProductRelateToManyForCreateInput
   user: UserRelateToOneForCreateInput
   charge: String
+  createdAt: DateTime
+  updatedAt: DateTime
 }
 
 """

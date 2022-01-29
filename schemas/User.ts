@@ -1,5 +1,11 @@
 import { list } from '@keystone-6/core';
-import { text, password, relationship } from '@keystone-6/core/fields';
+import {
+  text,
+  password,
+  relationship,
+  timestamp,
+  json,
+} from '@keystone-6/core/fields';
 import { permissions, rules } from '../access';
 
 export const User = list({
@@ -57,6 +63,19 @@ export const User = list({
       ui: {
         createView: { fieldMode: 'hidden' },
         itemView: { fieldMode: 'read' },
+      },
+    }),
+    createdOn: timestamp(),
+    updatedOn: timestamp(),
+    history: json({
+      defaultValue: {
+        logs: [
+          {
+            '2011-10-05T14:48:00.000Z': {
+              email: { prev: 'test', new: 'text' },
+            },
+          },
+        ],
       },
     }),
   },
