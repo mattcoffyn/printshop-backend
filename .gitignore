@@ -1,3 +1,6 @@
+# Keystone build dir
+.keystone
+
 # Logs
 logs
 *.log
@@ -51,23 +54,43 @@ typings/
 # Output of 'npm pack'
 *.tgz
 
+# Yarn Integrity file
+.yarn-integrity
+
 # dotenv environment variables file
 .env
 .env.development
 .env.production
 !.env.example
 
-# gatsby files
-.cache/
-public
+# ESlint reports
+reports/
+
+# jest_ci output
+junit.xml
 
 # Mac files
 .DS_Store
+.idea
+
+# Editor
+*.sublime-project
+*.sublime-workspace
+*.vscode
+
+package-lock.json
+
+dist/
+
+# Used by the image field type tests as a storage target
+tmp_test_images/
+tmp_test_files/
 
 # Yarn
 yarn-error.log
 .pnp/
 .pnp.js
+
 # Yarn Integrity file
 .yarn-integrity
 
@@ -75,4 +98,39 @@ yarn-error.log
 .netlify
 .now
 
-.keystone/
+# Created by https://www.gitignore.io/api/vim
+# Edit at https://www.gitignore.io/?templates=vim
+
+### Vim ###
+# Swap
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+
+# Session
+Session.vim
+Sessionx.vim
+
+# Temporary
+.netrwhist
+*~
+# Auto-generated tag files
+tags
+# Persistent undo
+[._]*.un~
+
+# End of https://www.gitignore.io/api/vim
+
+projects/
+temp/
+
+# SQLite databases
+*.db
+*.db-journal
+
+# Generated files from build process
+robots.txt
+sitemap.xml
+
