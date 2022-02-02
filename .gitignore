@@ -1,7 +1,8 @@
-# Keystone
+# Next.js build dir
+.next
+
+# Keystone build dir
 .keystone
-.keystone/admin
-keystone.db
 
 # Logs
 logs
