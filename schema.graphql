@@ -1328,6 +1328,7 @@ input CreateInitialUserInput {
   name: String
   email: String
   password: String
+  role: RoleRelateToOneForCreateInput
 }
 
 type RedeemUserPasswordResetTokenResult {
