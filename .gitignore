@@ -1,5 +1,7 @@
-# Keystone build dir
+# Keystone
 .keystone
+.keystone/admin
+keystone.db
 
 # Logs
 logs
